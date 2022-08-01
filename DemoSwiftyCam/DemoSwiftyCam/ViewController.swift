@@ -30,7 +30,7 @@ class ViewController: SwiftyCamViewController, SwiftyCamViewControllerDelegate {
 		maximumVideoDuration = 10.0
         shouldUseDeviceOrientation = true
         allowAutoRotate = true
-        audioEnabled = true
+        audioEnabled = false
         flashMode = .auto
         flashButton.setImage(#imageLiteral(resourceName: "flashauto"), for: UIControl.State())
         captureButton.buttonEnabled = false

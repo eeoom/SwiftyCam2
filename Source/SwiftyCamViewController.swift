@@ -286,6 +286,9 @@ open class SwiftyCamViewController: UIViewController, AVCapturePhotoCaptureDeleg
     /// Boolean to store when View Controller is notified session is running
 
     fileprivate var sessionRunning               = false
+    
+    fileprivate var portraitConstraints : [NSLayoutConstraint] = [];
+    fileprivate var landscapeConstraints : [NSLayoutConstraint] = [];
 
 	/// Disable view autorotation for forced portrait recorindg
 
@@ -303,17 +306,55 @@ open class SwiftyCamViewController: UIViewController, AVCapturePhotoCaptureDeleg
 
 	override open func viewDidLoad() {
 		super.viewDidLoad()
-        previewLayer = PreviewView(frame: view.frame, videoGravity: videoGravity)
-        print(view.frame);
-        previewLayer.center = view.center
-        view.addSubview(previewLayer)
-        view.sendSubviewToBack(previewLayer)
+        
+        
+        self.previewLayer = PreviewView(frame: self.view.frame, videoGravity: self.videoGravity)
+        self.previewLayer.translatesAutoresizingMaskIntoConstraints = false
+        print(self.view.frame);
+        self.view.addSubview(self.previewLayer)
+        
+        self.previewLayer.layer.cornerRadius = 20
+        self.previewLayer.layer.masksToBounds = true
+        
+        let topConstraintPortrait = self.previewLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        portraitConstraints.append(topConstraintPortrait);
 
-		// Add Gesture Recognizers
+        let leadingConstraintPortrait = self.previewLayer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0)
+        portraitConstraints.append(leadingConstraintPortrait);
+        
+        let trailingConstraintPortrait = self.previewLayer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+        portraitConstraints.append(trailingConstraintPortrait);
+        
+        let heightConstraintPortrait = self.previewLayer.heightAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
+        portraitConstraints.append(heightConstraintPortrait);
+        
+        // Landscape
+        
+        let topConstraintLandscape = self.previewLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        landscapeConstraints.append(topConstraintLandscape);
 
-        addGestureRecognizers()
+        let leadingConstraintLandscape = self.previewLayer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0)
+        landscapeConstraints.append(leadingConstraintLandscape);
+        
+        let bottomConstraintLandscape = self.previewLayer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+        landscapeConstraints.append(bottomConstraintLandscape);
+        
+        let widthConstraintLandscape = self.previewLayer.widthAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
+        landscapeConstraints.append(widthConstraintLandscape);
+        
+        portraitConstraints.forEach { constraint in
+            constraint.isActive = true;
+        }
 
-		previewLayer.session = session
+        self.view.layoutIfNeeded()
+
+        self.view.sendSubviewToBack(self.previewLayer)
+
+        // Add Gesture Recognizers
+
+        self.addGestureRecognizers()
+
+        self.previewLayer.session = self.session
 
 		// Test authorization status for Camera and Micophone
 
@@ -348,12 +389,28 @@ open class SwiftyCamViewController: UIViewController, AVCapturePhotoCaptureDeleg
     private func updatePreviewLayer(layer: AVCaptureConnection, orientation: AVCaptureVideoOrientation) {
 
         if(shouldAutorotate){
-            layer.videoOrientation = orientation
+           layer.videoOrientation = orientation
         } else {
-            layer.videoOrientation = .portrait
+           layer.videoOrientation = .portrait
         }
         
-        previewLayer.frame = self.view.bounds
+        if orientation == .portrait {
+            landscapeConstraints.forEach { constraint in
+                constraint.isActive = false;
+            }
+            portraitConstraints.forEach { constraint in
+                constraint.isActive = true;
+            }
+        } else {
+            portraitConstraints.forEach { constraint in
+                constraint.isActive = false;
+            }
+            landscapeConstraints.forEach { constraint in
+                constraint.isActive = true;
+            }
+        }
+        
+        
 
     }
 

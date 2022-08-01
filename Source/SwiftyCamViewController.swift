@@ -21,7 +21,7 @@ import AVFoundation
 
 /// A UIViewController Camera View Subclass
 
-open class SwiftyCamViewController: UIViewController, AVCapturePhotoCaptureDelegate {
+open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
 	// MARK: Enumeration Declaration
 
@@ -113,7 +113,7 @@ open class SwiftyCamViewController: UIViewController, AVCapturePhotoCaptureDeleg
 
 	/// Public Camera Delegate for the Custom View Controller Subclass
 
-	public weak var cameraDelegate: SwiftyCamViewControllerDelegate?
+	public weak var cameraDelegate: SwiftyCam2ViewControllerDelegate?
 
 	/// Maxiumum video duration if SwiftyCamButton is used
 
@@ -758,9 +758,9 @@ open class SwiftyCamViewController: UIViewController, AVCapturePhotoCaptureDeleg
 	fileprivate func addVideoInput() {
 		switch currentCamera {
 		case .front:
-			videoDevice = SwiftyCamViewController.deviceWithMediaType(AVMediaType.video.rawValue, preferringPosition: .front)
+			videoDevice = SwiftyCam2ViewController.deviceWithMediaType(AVMediaType.video.rawValue, preferringPosition: .front)
 		case .rear:
-			videoDevice = SwiftyCamViewController.deviceWithMediaType(AVMediaType.video.rawValue, preferringPosition: .back)
+			videoDevice = SwiftyCam2ViewController.deviceWithMediaType(AVMediaType.video.rawValue, preferringPosition: .back)
 		}
 
 		if let device = videoDevice {
@@ -1101,7 +1101,7 @@ open class SwiftyCamViewController: UIViewController, AVCapturePhotoCaptureDeleg
     }
 }
 
-extension SwiftyCamViewController : SwiftyCamButtonDelegate {
+extension SwiftyCam2ViewController : SwiftyCamButtonDelegate {
 
 	/// Sets the maximum duration of the SwiftyCamButton
 
@@ -1137,7 +1137,7 @@ extension SwiftyCamViewController : SwiftyCamButtonDelegate {
 
 // MARK: AVCaptureFileOutputRecordingDelegate
 
-extension SwiftyCamViewController : AVCaptureFileOutputRecordingDelegate {
+extension SwiftyCam2ViewController : AVCaptureFileOutputRecordingDelegate {
 
 	/// Process newly captured video and write it to temporary directory
 
@@ -1166,7 +1166,7 @@ extension SwiftyCamViewController : AVCaptureFileOutputRecordingDelegate {
 
 // Mark: UIGestureRecognizer Declarations
 
-extension SwiftyCamViewController {
+extension SwiftyCam2ViewController {
 
 	/// Handle pinch gesture
 
@@ -1314,7 +1314,7 @@ extension SwiftyCamViewController {
 
 // MARK: UIGestureRecognizerDelegate
 
-extension SwiftyCamViewController : UIGestureRecognizerDelegate {
+extension SwiftyCam2ViewController : UIGestureRecognizerDelegate {
 
 	/// Set beginZoomScale when pinch begins
 

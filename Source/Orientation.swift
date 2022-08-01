@@ -45,7 +45,7 @@ class Orientation  {
         self.deviceOrientation = nil
     }
     
-    func getImageOrientation(forCamera: SwiftyCamViewController.CameraSelection) -> UIImage.Orientation {
+    func getImageOrientation(forCamera: SwiftyCam2ViewController.CameraSelection) -> UIImage.Orientation {
         guard shouldUseDeviceOrientation, let deviceOrientation = self.deviceOrientation else { return forCamera == .rear ? .right : .leftMirrored }
         
         switch deviceOrientation {

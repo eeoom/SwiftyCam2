@@ -72,9 +72,15 @@
                             <constraint firstItem="stR-Rn-UdV" firstAttribute="leading" secondItem="hke-fJ-4fX" secondAttribute="trailing" constant="50" id="4S2-fF-Ta9"/>
                             <constraint firstAttribute="bottom" secondItem="qRI-gF-kZh" secondAttribute="bottom" constant="20" id="77K-5B-HU2"/>
                             <constraint firstItem="hS2-sy-kuv" firstAttribute="centerY" secondItem="hke-fJ-4fX" secondAttribute="centerY" id="AuI-5x-aKM"/>
+                            <constraint firstAttribute="trailing" secondItem="hke-fJ-4fX" secondAttribute="trailing" constant="20" id="BJ6-zx-PUg"/>
+                            <constraint firstItem="hS2-sy-kuv" firstAttribute="top" secondItem="hke-fJ-4fX" secondAttribute="bottom" constant="50" id="J84-0v-Ndl"/>
+                            <constraint firstItem="stR-Rn-UdV" firstAttribute="centerX" secondItem="hke-fJ-4fX" secondAttribute="centerX" id="UZR-CL-veS"/>
+                            <constraint firstItem="hke-fJ-4fX" firstAttribute="top" secondItem="stR-Rn-UdV" secondAttribute="bottom" constant="50" id="Zaw-9l-duD"/>
                             <constraint firstItem="qRI-gF-kZh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="bgM-gW-cU2"/>
                             <constraint firstItem="hke-fJ-4fX" firstAttribute="leading" secondItem="hS2-sy-kuv" secondAttribute="trailing" constant="50" id="fY6-aF-vVL"/>
+                            <constraint firstItem="hke-fJ-4fX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="kYJ-Dg-lNF"/>
                             <constraint firstItem="qRI-gF-kZh" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="kYN-ea-tkx"/>
+                            <constraint firstItem="hS2-sy-kuv" firstAttribute="centerX" secondItem="hke-fJ-4fX" secondAttribute="centerX" id="rlZ-w6-gJ8"/>
                             <constraint firstItem="stR-Rn-UdV" firstAttribute="centerY" secondItem="hke-fJ-4fX" secondAttribute="centerY" id="sJP-2Z-GAn"/>
                             <constraint firstItem="qRI-gF-kZh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="u3a-4I-8Bf"/>
                         </constraints>
@@ -91,9 +97,25 @@
                                 <exclude reference="kYN-ea-tkx"/>
                             </mask>
                         </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="0OM-Pc-Ze1"/>
+                                <exclude reference="22M-gB-uKl"/>
+                                <exclude reference="fY6-aF-vVL"/>
+                                <exclude reference="4S2-fF-Ta9"/>
+                                <exclude reference="sJP-2Z-GAn"/>
+                                <exclude reference="AuI-5x-aKM"/>
+                            </mask>
+                        </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="77K-5B-HU2"/>
+                                <exclude reference="BJ6-zx-PUg"/>
+                                <exclude reference="Zaw-9l-duD"/>
+                                <exclude reference="kYJ-Dg-lNF"/>
+                                <exclude reference="UZR-CL-veS"/>
+                                <exclude reference="J84-0v-Ndl"/>
+                                <exclude reference="rlZ-w6-gJ8"/>
                             </mask>
                         </variation>
                     </view>

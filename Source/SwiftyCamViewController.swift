@@ -36,6 +36,11 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
 		case front = "front"
 	}
     
+    public enum ViewStatus {
+        case cam
+        case preview
+    }
+    
     public enum FlashMode{
         //Return the equivalent AVCaptureDevice.FlashMode
         var AVFlashMode: AVCaptureDevice.FlashMode {
@@ -179,6 +184,8 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
             orientation.shouldUseDeviceOrientation = shouldUseDeviceOrientation
         }
     }
+    
+    public var viewStatus : ViewStatus = .cam;
 
     /// Sets whether or not View Controller supports auto rotation
 
@@ -570,6 +577,7 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
         self.previewLayer.image = nil;
         self.previewLayer.isHidden = true;
         self.camLayer.isHidden = false;
+        self.viewStatus = .cam;
     }
 
 	/**
@@ -957,6 +965,7 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
                 self.camLayer.isHidden = true;
                 self.previewLayer.isHidden = false;
                 self.previewLayer.image = image;
+                self.viewStatus = .preview;
                 self.cameraDelegate?.swiftyCam(self, didPreviewTake: image);
             }
         }

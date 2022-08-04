@@ -48,7 +48,7 @@ public protocol SwiftyCam2ViewControllerDelegate: AnyObject {
      - Parameter photo: UIImage captured from the current session
      */
     
-    func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didTake photo: UIImage)
+    func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didPreviewTake photo: UIImage)
     
     /**
      SwiftyCam2ViewControllerDelegate function called when SwiftyCam2ViewController begins recording video.
@@ -142,7 +142,7 @@ public extension SwiftyCam2ViewControllerDelegate {
         // Optional
     }
     
-    func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didTake photo: UIImage) {
+    func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didPreviewTake photo: UIImage) {
         // Optional
     }
 

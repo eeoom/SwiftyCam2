@@ -37,7 +37,7 @@ public enum SwiftyCamVideoGravity {
     case resizeAspectFill
 }
 
-class PreviewView: UIView {
+class CamView: UIView {
     
     private var gravity: SwiftyCamVideoGravity = .resizeAspect
     

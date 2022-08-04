@@ -269,7 +269,11 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
 
 	/// PreviewView for the capture session
 
-	fileprivate var previewLayer                 : PreviewView!
+	fileprivate var camLayer                 : CamView!
+    
+    /// PreviewView for the capture session
+
+    fileprivate var previewLayer                 : UIImageView!
 
 	/// UIView for front facing flash
 
@@ -307,54 +311,85 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
 	override open func viewDidLoad() {
 		super.viewDidLoad()
         
-        
-        self.previewLayer = PreviewView(frame: self.view.frame, videoGravity: self.videoGravity)
+        self.previewLayer = UIImageView(frame: self.view.frame);
+        self.previewLayer.contentMode = .scaleAspectFit
+        self.previewLayer.isHidden = true;
         self.previewLayer.translatesAutoresizingMaskIntoConstraints = false
-        print(self.view.frame);
         self.view.addSubview(self.previewLayer)
         
+        self.camLayer = CamView(frame: self.view.frame, videoGravity: self.videoGravity)
+        self.camLayer.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.camLayer)
+        
+        self.camLayer.layer.cornerRadius = 20
+        self.camLayer.layer.masksToBounds = true
         self.previewLayer.layer.cornerRadius = 20
         self.previewLayer.layer.masksToBounds = true
         
-        let topConstraintPortrait = self.previewLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        let topConstraintPortrait = self.camLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
         portraitConstraints.append(topConstraintPortrait);
 
-        let leadingConstraintPortrait = self.previewLayer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0)
+        let leadingConstraintPortrait = self.camLayer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0)
         portraitConstraints.append(leadingConstraintPortrait);
         
-        let trailingConstraintPortrait = self.previewLayer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+        let trailingConstraintPortrait = self.camLayer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
         portraitConstraints.append(trailingConstraintPortrait);
         
-        let heightConstraintPortrait = self.previewLayer.heightAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
+        let heightConstraintPortrait = self.camLayer.heightAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
         portraitConstraints.append(heightConstraintPortrait);
+        
+        let topConstraintPortraitPreview = self.previewLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        portraitConstraints.append(topConstraintPortraitPreview);
+
+        let leadingConstraintPortraitPreview = self.previewLayer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0)
+        portraitConstraints.append(leadingConstraintPortraitPreview);
+        
+        let trailingConstraintPortraitPreview = self.previewLayer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+        portraitConstraints.append(trailingConstraintPortraitPreview);
+        
+        let heightConstraintPortraitPreview = self.previewLayer.heightAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
+        portraitConstraints.append(heightConstraintPortraitPreview);
         
         // Landscape
         
-        let topConstraintLandscape = self.previewLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        let topConstraintLandscape = self.camLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
         landscapeConstraints.append(topConstraintLandscape);
 
-        let leadingConstraintLandscape = self.previewLayer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0)
+        let leadingConstraintLandscape = self.camLayer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0)
         landscapeConstraints.append(leadingConstraintLandscape);
         
-        let bottomConstraintLandscape = self.previewLayer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+        let bottomConstraintLandscape = self.camLayer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
         landscapeConstraints.append(bottomConstraintLandscape);
         
-        let widthConstraintLandscape = self.previewLayer.widthAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
+        let widthConstraintLandscape = self.camLayer.widthAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
         landscapeConstraints.append(widthConstraintLandscape);
+        
+        let topConstraintLandscapePreview = self.previewLayer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        landscapeConstraints.append(topConstraintLandscapePreview);
+
+        let leadingConstraintLandscapePreview = self.previewLayer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0)
+        landscapeConstraints.append(leadingConstraintLandscapePreview);
+        
+        let bottomConstraintLandscapePreview = self.previewLayer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+        landscapeConstraints.append(bottomConstraintLandscapePreview);
+        
+        let widthConstraintLandscapePreview = self.previewLayer.widthAnchor.constraint(equalToConstant: (self.view.frame.size.width / 9 * 16))
+        landscapeConstraints.append(widthConstraintLandscapePreview);
         
         portraitConstraints.forEach { constraint in
             constraint.isActive = true;
         }
 
-        self.view.layoutIfNeeded()
+        self.view.layoutIfNeeded();
 
-        self.view.sendSubviewToBack(self.previewLayer)
+        self.view.sendSubviewToBack(self.camLayer);
+        self.view.sendSubviewToBack(self.previewLayer);
 
         // Add Gesture Recognizers
 
         self.addGestureRecognizers()
 
-        self.previewLayer.session = self.session
+        self.camLayer.session = self.session
 
 		// Test authorization status for Camera and Micophone
 
@@ -386,7 +421,7 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
     // MARK: ViewDidLayoutSubviews
 
     /// ViewDidLayoutSubviews() Implementation
-    private func updatePreviewLayer(layer: AVCaptureConnection, orientation: AVCaptureVideoOrientation) {
+    private func updateCamLayer(layer: AVCaptureConnection, orientation: AVCaptureVideoOrientation) {
 
         if(shouldAutorotate){
            layer.videoOrientation = orientation
@@ -409,15 +444,13 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
                 constraint.isActive = true;
             }
         }
-        
-        
 
     }
 
     override open func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if let connection =  self.previewLayer?.videoPreviewLayer.connection  {
+        if let connection =  self.camLayer?.videoPreviewLayer.connection  {
 
             let currentDevice: UIDevice = UIDevice.current
 
@@ -428,23 +461,23 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
             if previewLayerConnection.isVideoOrientationSupported {
 
                 switch (orientation) {
-                case .portrait: updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
+                case .portrait: updateCamLayer(layer: previewLayerConnection, orientation: .portrait)
 
                     break
 
-                case .landscapeRight: updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeLeft)
+                case .landscapeRight: updateCamLayer(layer: previewLayerConnection, orientation: .landscapeLeft)
 
                     break
 
-                case .landscapeLeft: updatePreviewLayer(layer: previewLayerConnection, orientation: .landscapeRight)
+                case .landscapeLeft: updateCamLayer(layer: previewLayerConnection, orientation: .landscapeRight)
 
                     break
 
-                case .portraitUpsideDown: updatePreviewLayer(layer: previewLayerConnection, orientation: .portraitUpsideDown)
+                case .portraitUpsideDown: updateCamLayer(layer: previewLayerConnection, orientation: .portraitUpsideDown)
 
                     break
 
-                default: updatePreviewLayer(layer: previewLayerConnection, orientation: .portrait)
+                default: updateCamLayer(layer: previewLayerConnection, orientation: .portrait)
 
                     break
                 }
@@ -487,7 +520,7 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
 
                 // Preview layer video orientation can be set only after the connection is created
                 DispatchQueue.main.async {
-                    self.previewLayer.videoPreviewLayer.connection?.videoOrientation = self.orientation.getPreviewLayerOrientation()
+                    self.camLayer.videoPreviewLayer.connection?.videoOrientation = self.orientation.getPreviewLayerOrientation()
                 }
 
 			case .notAuthorized:
@@ -532,6 +565,12 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
 	}
 
 	// MARK: Public Functions
+    
+    public func resetCamera() {
+        self.previewLayer.image = nil;
+        self.previewLayer.isHidden = true;
+        self.camLayer.isHidden = false;
+    }
 
 	/**
 
@@ -585,11 +624,11 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
 			flashView = UIView(frame: view.frame)
 			flashView?.backgroundColor = UIColor.white
 			flashView?.alpha = 0.85
-			previewLayer.addSubview(flashView!)
+			camLayer.addSubview(flashView!)
 		}
 
         //Must be fetched before on main thread
-        let previewOrientation = previewLayer.videoPreviewLayer.connection!.videoOrientation
+        let previewOrientation = camLayer.videoPreviewLayer.connection!.videoOrientation
 
 		sessionQueue.async { [unowned self] in
 			if !movieFileOutput.isRecording {
@@ -915,7 +954,10 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
         let capturedImage = self.processPhoto(imageData)
         if let image = capturedImage {
             DispatchQueue.main.async {
-                self.cameraDelegate?.swiftyCam(self, didTake: image);
+                self.camLayer.isHidden = true;
+                self.previewLayer.isHidden = false;
+                self.previewLayer.image = image;
+                self.cameraDelegate?.swiftyCam(self, didPreviewTake: image);
             }
         }
     }
@@ -1203,8 +1245,8 @@ extension SwiftyCam2ViewController {
 			return
 		}
 
-		let screenSize = previewLayer!.bounds.size
-		let tapPoint = tap.location(in: previewLayer!)
+		let screenSize = camLayer!.bounds.size
+		let tapPoint = tap.location(in: camLayer!)
 		let x = tapPoint.y / screenSize.height
 		let y = 1.0 - tapPoint.x / screenSize.width
 		let focusPoint = CGPoint(x: x, y: y)
@@ -1293,21 +1335,21 @@ extension SwiftyCam2ViewController {
 	fileprivate func addGestureRecognizers() {
 		pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(zoomGesture(pinch:)))
 		pinchGesture.delegate = self
-		previewLayer.addGestureRecognizer(pinchGesture)
+		camLayer.addGestureRecognizer(pinchGesture)
 
 		let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTapGesture(tap:)))
 		singleTapGesture.numberOfTapsRequired = 1
 		singleTapGesture.delegate = self
-		previewLayer.addGestureRecognizer(singleTapGesture)
+		camLayer.addGestureRecognizer(singleTapGesture)
 
 		let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapGesture(tap:)))
 		doubleTapGesture.numberOfTapsRequired = 2
 		doubleTapGesture.delegate = self
-		previewLayer.addGestureRecognizer(doubleTapGesture)
+		camLayer.addGestureRecognizer(doubleTapGesture)
 
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture(pan:)))
         panGesture.delegate = self
-        previewLayer.addGestureRecognizer(panGesture)
+        camLayer.addGestureRecognizer(panGesture)
 	}
 }
 

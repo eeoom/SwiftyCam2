@@ -22,6 +22,7 @@ class ViewController: SwiftyCam2ViewController, SwiftyCam2ViewControllerDelegate
     @IBOutlet weak var captureButton    : SwiftyRecordButton!
     @IBOutlet weak var flipCameraButton : UIButton!
     @IBOutlet weak var flashButton      : UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -31,6 +32,7 @@ class ViewController: SwiftyCam2ViewController, SwiftyCam2ViewControllerDelegate
         shouldUseDeviceOrientation = true
         allowAutoRotate = true
         audioEnabled = false
+        cancelButton.isHidden = true;
         flashMode = .auto
         flashButton.setImage(#imageLiteral(resourceName: "flashauto"), for: UIControl.State())
         captureButton.buttonEnabled = false
@@ -56,9 +58,10 @@ class ViewController: SwiftyCam2ViewController, SwiftyCam2ViewControllerDelegate
     }
     
 
-	func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didTake photo: UIImage) {
-		let newVC = PhotoViewController(image: photo)
-		self.present(newVC, animated: true, completion: nil)
+	func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didPreviewTake photo: UIImage) {
+        self.cancelButton.isHidden = false;
+		//let newVC = PhotoViewController(image: photo)
+		//self.present(newVC, animated: true, completion: nil)
 	}
 
 	func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didBeginRecordingVideo camera: SwiftyCam2ViewController.CameraSelection) {
@@ -106,6 +109,11 @@ class ViewController: SwiftyCam2ViewController, SwiftyCam2ViewControllerDelegate
 
     @IBAction func cameraSwitchTapped(_ sender: Any) {
         switchCamera()
+    }
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        self.cancelButton.isHidden = true;
+        self.resetCamera();
     }
     
     @IBAction func toggleFlashTapped(_ sender: Any) {

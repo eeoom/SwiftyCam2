@@ -58,7 +58,7 @@ class ViewController: SwiftyCam2ViewController, SwiftyCam2ViewControllerDelegate
     }
     
 
-	func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didPreviewTake photo: UIImage) {
+	func swiftyCam(_ swiftyCam: SwiftyCam2ViewController, didPreviewPhoto photo: UIImage) {
         self.cancelButton.isHidden = false;
 		//let newVC = PhotoViewController(image: photo)
 		//self.present(newVC, animated: true, completion: nil)

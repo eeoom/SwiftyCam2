@@ -966,7 +966,7 @@ open class SwiftyCam2ViewController: UIViewController, AVCapturePhotoCaptureDele
                 self.previewLayer.isHidden = false;
                 self.previewLayer.image = image;
                 self.viewStatus = .preview;
-                self.cameraDelegate?.swiftyCam(self, didPreviewTake: image);
+                self.cameraDelegate?.swiftyCam(self, didPreviewPhoto: image);
             }
         }
     }
